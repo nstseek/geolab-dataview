@@ -17,12 +17,17 @@ interface NewsArticleDetailProps {
   onClose: () => void
 }
 
+const TITLE_ID = 'article-detail-title'
+
 export default function NewsArticleDetail({ article, onClose }: NewsArticleDetailProps) {
   if (!article) return null
 
   return (
-    <Modal open onClose={onClose}>
+    <Modal open onClose={onClose} aria-labelledby={TITLE_ID}>
       <Paper
+        role='dialog'
+        aria-modal='true'
+        aria-labelledby={TITLE_ID}
         sx={{
           position: 'absolute',
           top: '50%',
@@ -36,10 +41,10 @@ export default function NewsArticleDetail({ article, onClose }: NewsArticleDetai
         }}
       >
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
-          <Typography variant='h6' sx={{ flex: 1, pr: 2, lineHeight: 1.4 }}>
+          <Typography id={TITLE_ID} variant='h6' sx={{ flex: 1, pr: 2, lineHeight: 1.4 }}>
             {article.title}
           </Typography>
-          <IconButton onClick={onClose} size='small'>
+          <IconButton onClick={onClose} size='small' aria-label='Close article'>
             <CloseIcon />
           </IconButton>
         </Box>
@@ -90,11 +95,12 @@ export default function NewsArticleDetail({ article, onClose }: NewsArticleDetai
 
         <Button
           variant='contained'
-          endIcon={<OpenInNewIcon />}
+          endIcon={<OpenInNewIcon aria-hidden='true' />}
           href={article.link}
           target='_blank'
           rel='noopener noreferrer'
           component='a'
+          aria-label='Read full article (opens in new tab)'
         >
           Read full article
         </Button>

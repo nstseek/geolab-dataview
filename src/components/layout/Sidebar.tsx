@@ -10,7 +10,7 @@ import ListItemText from '@mui/material/ListItemText'
 import Typography from '@mui/material/Typography'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 
 const DRAWER_WIDTH = 240
 
@@ -35,22 +35,29 @@ const drawerPaperSx = {
 export default function Sidebar({ mobileOpen, onClose }: SidebarProps) {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
+  const { pathname } = useLocation()
+
+  function isActive(path: string) {
+    return path === '/' ? pathname === '/' : pathname.startsWith(path)
+  }
 
   const drawerContent = (
     <>
       <Typography
         variant='overline'
+        aria-hidden='true'
         sx={{ px: 2, pt: 2, pb: 1, color: 'text.secondary', letterSpacing: 2 }}
       >
         Navigation
       </Typography>
-      <List>
+      <List component='nav' aria-label='Main navigation'>
         {navItems.map(({ label, path, icon }) => (
           <ListItem key={path} disablePadding>
             <ListItemButton
               component={NavLink}
               to={path}
               end={path === '/'}
+              aria-current={isActive(path) ? 'page' : undefined}
               onClick={isMobile ? onClose : undefined}
               sx={{
                 '&.active': {
@@ -76,6 +83,7 @@ export default function Sidebar({ mobileOpen, onClose }: SidebarProps) {
   if (isMobile) {
     return (
       <Drawer
+        id='nav-sidebar'
         variant='temporary'
         open={mobileOpen}
         onClose={onClose}
@@ -89,6 +97,7 @@ export default function Sidebar({ mobileOpen, onClose }: SidebarProps) {
 
   return (
     <Drawer
+      id='nav-sidebar'
       variant='permanent'
       sx={{
         width: DRAWER_WIDTH,

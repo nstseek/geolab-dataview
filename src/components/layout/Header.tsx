@@ -6,10 +6,11 @@ import Typography from '@mui/material/Typography'
 import { useHeader } from '@context/HeaderContext'
 
 interface HeaderProps {
+  sidebarOpen: boolean
   onMenuClick: () => void
 }
 
-export default function Header({ onMenuClick }: HeaderProps) {
+export default function Header({ sidebarOpen, onMenuClick }: HeaderProps) {
   const { pageTitle, contextSuffix } = useHeader()
 
   const title = contextSuffix ? `${pageTitle} – ${contextSuffix}` : pageTitle
@@ -19,7 +20,9 @@ export default function Header({ onMenuClick }: HeaderProps) {
       <Toolbar>
         <IconButton
           color='inherit'
-          aria-label='open navigation'
+          aria-label='Toggle navigation menu'
+          aria-controls='nav-sidebar'
+          aria-expanded={sidebarOpen}
           edge='start'
           onClick={onMenuClick}
           sx={{ mr: 1, display: { md: 'none' } }}
@@ -31,6 +34,7 @@ export default function Header({ onMenuClick }: HeaderProps) {
         </Typography>
         <Typography
           variant='h6'
+          aria-hidden='true'
           sx={{ ml: 2, color: 'text.secondary', fontWeight: 400, display: { xs: 'none', sm: 'block' } }}
         >
           /

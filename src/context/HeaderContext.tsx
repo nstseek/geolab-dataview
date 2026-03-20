@@ -15,6 +15,7 @@ export function HeaderProvider({ children }: { children: React.ReactNode }) {
   const setHeader = useCallback((title: string, suffix: string) => {
     setPageTitle(title)
     setContextSuffix(suffix)
+    document.title = suffix ? `${title} – ${suffix} | GeoLab` : `${title} | GeoLab`
   }, [])
 
   return (

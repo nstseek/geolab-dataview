@@ -45,6 +45,8 @@ export default function SamplesToolbar({
         ref={fileInputRef}
         type='file'
         accept='.csv'
+        aria-hidden='true'
+        tabIndex={-1}
         style={{ display: 'none' }}
         onChange={handleFileChange}
       />
