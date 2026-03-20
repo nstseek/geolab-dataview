@@ -1,4 +1,4 @@
-# GeoLab DataView
+<img width="411" height="896" alt="image" src="https://github.com/user-attachments/assets/6e7e9b6b-c9a7-42c1-b665-3be6afa34d26" /># GeoLab DataView
 
 [![Build](https://github.com/nstseek/geolab-dataview/actions/workflows/build.yml/badge.svg)](https://github.com/nstseek/geolab-dataview/actions/workflows/build.yml)
 [![Test](https://github.com/nstseek/geolab-dataview/actions/workflows/test.yml/badge.svg)](https://github.com/nstseek/geolab-dataview/actions/workflows/test.yml)
@@ -80,6 +80,33 @@ The spec listed responsive design as a "plus." The implementation covers the ful
 - **Feature-scoped folder structure** — page-specific code lives inside its page folder; only genuinely shared code lives in top-level directories. This scales without polluting shared namespaces.
 
 ---
+
+## Screenshots
+
+### Homepage
+
+<img width="2566" height="1267" alt="image" src="https://github.com/user-attachments/assets/3ac414d6-a82c-4963-b57a-8a94e491335d" />
+
+### News
+
+<img width="2565" height="1272" alt="image" src="https://github.com/user-attachments/assets/1e803744-acc0-48cd-9b1a-f1c2edaa1e9f" />
+<img width="2564" height="1270" alt="image" src="https://github.com/user-attachments/assets/789971d5-5242-4b2f-af1d-a8f3d45f3d58" />
+
+### Samples
+
+<img width="2565" height="1268" alt="image" src="https://github.com/user-attachments/assets/e32f6437-dadd-499e-84d0-edc7f3beee29" />
+<img width="2566" height="1269" alt="image" src="https://github.com/user-attachments/assets/4d899807-6fbb-46bc-b253-2fd40d189485" />
+
+### Mobile
+
+<img width="413" height="895" alt="image" src="https://github.com/user-attachments/assets/19196a65-d98a-4c19-80e1-8b13fa489da5" />
+<img width="411" height="896" alt="image" src="https://github.com/user-attachments/assets/75039f87-9e46-4ae2-a4db-517013dd298c" />
+<img width="413" height="896" alt="image" src="https://github.com/user-attachments/assets/24e97293-8034-4ca6-b3f7-053006c4b15f" />
+<img width="412" height="897" alt="image" src="https://github.com/user-attachments/assets/1eac5a04-e5e5-4a1e-8b88-6645e1496f9b" />
+<img width="414" height="894" alt="image" src="https://github.com/user-attachments/assets/90bfbe9f-441a-40ba-a1e3-5f33aba1f003" />
+<img width="411" height="894" alt="image" src="https://github.com/user-attachments/assets/d664b4f4-b02f-46ff-8279-464b69c9d76c" />
+
+--
 
 ## Getting Started
 
