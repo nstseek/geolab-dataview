@@ -85,7 +85,7 @@ The spec listed responsive design as a "plus." The implementation covers the ful
 
 ### Prerequisites
 
-- Node.js 22+
+- Node.js 22+ (you can run `nvm use` since this project has a .nvmrc)
 - npm
 
 ### Installation
