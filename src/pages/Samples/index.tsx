@@ -6,12 +6,13 @@ import {
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
-import { useHeader } from "@context/HeaderContext";
 import SamplesSummaryBar from "./components/SamplesSummary";
 import SamplesToolbar from "./components/SamplesToolbar";
 import { useSamplesRows } from "./hooks/useSamplesRows";
-import { COMPUTED_CELL_CLASS, samplesColumns } from "./utils/columns";
+import { samplesColumns } from "./utils/columns";
 import { handleExport, handleFileUpload } from "./utils/csv";
+import { useHeader } from "@context/HeaderContext";
+import { COMPUTED_CELL_CLASS } from "./utils/columns/constants";
 
 export default function Samples() {
   const { setHeader } = useHeader();

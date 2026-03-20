@@ -4,27 +4,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
-
-export const COUNTRIES = [
-  { code: "", label: "All Countries" },
-  { code: "us", label: "United States" },
-  { code: "gb", label: "United Kingdom" },
-  { code: "de", label: "Germany" },
-  { code: "fr", label: "France" },
-  { code: "it", label: "Italy" },
-  { code: "es", label: "Spain" },
-  { code: "nl", label: "Netherlands" },
-  { code: "pl", label: "Poland" },
-  { code: "se", label: "Sweden" },
-  { code: "no", label: "Norway" },
-  { code: "au", label: "Australia" },
-  { code: "ca", label: "Canada" },
-  { code: "jp", label: "Japan" },
-  { code: "br", label: "Brazil" },
-  { code: "in", label: "India" },
-  { code: "cn", label: "China" },
-  { code: "za", label: "South Africa" },
-];
+import { COUNTRIES } from "./countries";
 
 interface NewsToolbarProps {
   search: string;

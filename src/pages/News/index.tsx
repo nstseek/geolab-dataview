@@ -1,13 +1,14 @@
 import Box from "@mui/material/Box";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { useHeader } from "@context/HeaderContext";
 import { useDebouncedState } from "@hooks/useDebouncedState";
 import { useNewsQuery } from "@queries/news/useNewsQuery";
 import type { NewsArticle } from "@queries/news/types";
 import NewsArticleDetail from "./NewsArticleDetail";
 import NewsArticleList from "./NewsArticleList";
-import NewsToolbar, { COUNTRIES } from "./NewsToolbar";
+import NewsToolbar from "./NewsToolbar";
+import { COUNTRIES } from "./NewsToolbar/countries";
+import { useHeader } from "@context/HeaderContext";
 
 export default function News() {
   const { setHeader } = useHeader();

@@ -4,7 +4,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Toaster } from "sonner";
 import Layout from "@components/layout/Layout";
-import { HeaderProvider } from "@context/HeaderContext";
+import { HeaderProvider } from "@context/HeaderContext/provider";
 import Home from "@pages/Home";
 import News from "@pages/News";
 import Samples from "@pages/Samples";

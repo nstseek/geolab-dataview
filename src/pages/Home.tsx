@@ -1,3 +1,4 @@
+import { useHeader } from "@context/HeaderContext";
 import ArticleIcon from "@mui/icons-material/Article";
 import ScienceIcon from "@mui/icons-material/Science";
 import Box from "@mui/material/Box";
@@ -7,7 +8,6 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useHeader } from "@context/HeaderContext";
 
 const pages = [
   {

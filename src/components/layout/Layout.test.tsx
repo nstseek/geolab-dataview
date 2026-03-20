@@ -3,7 +3,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { describe, it, expect } from "vitest";
-import { HeaderProvider } from "@context/HeaderContext";
+import { HeaderProvider } from "@context/HeaderContext/provider";
 import theme from "../../theme";
 import Layout from "./Layout";
 

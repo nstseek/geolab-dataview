@@ -1,12 +1,5 @@
-import { createContext, useCallback, useContext, useState } from "react";
-
-interface HeaderContextValue {
-  pageTitle: string;
-  contextSuffix: string;
-  setHeader: (title: string, suffix: string) => void;
-}
-
-const HeaderContext = createContext<HeaderContextValue | null>(null);
+import { useCallback, useState } from "react";
+import { HeaderContext } from "./context";
 
 export function HeaderProvider({ children }: { children: React.ReactNode }) {
   const [pageTitle, setPageTitle] = useState("Home");
@@ -25,10 +18,4 @@ export function HeaderProvider({ children }: { children: React.ReactNode }) {
       {children}
     </HeaderContext>
   );
-}
-
-export function useHeader() {
-  const ctx = useContext(HeaderContext);
-  if (!ctx) throw new Error("useHeader must be used within HeaderProvider");
-  return ctx;
 }
