@@ -6,16 +6,24 @@ import Select from '@mui/material/Select'
 import TextField from '@mui/material/TextField'
 
 const COUNTRIES = [
-  { code: '', label: 'All Regions' },
+  { code: '', label: 'All Countries' },
   { code: 'us', label: 'United States' },
   { code: 'gb', label: 'United Kingdom' },
   { code: 'de', label: 'Germany' },
   { code: 'fr', label: 'France' },
+  { code: 'it', label: 'Italy' },
+  { code: 'es', label: 'Spain' },
+  { code: 'nl', label: 'Netherlands' },
+  { code: 'pl', label: 'Poland' },
+  { code: 'se', label: 'Sweden' },
+  { code: 'no', label: 'Norway' },
   { code: 'au', label: 'Australia' },
   { code: 'ca', label: 'Canada' },
   { code: 'jp', label: 'Japan' },
   { code: 'br', label: 'Brazil' },
   { code: 'in', label: 'India' },
+  { code: 'cn', label: 'China' },
+  { code: 'za', label: 'South Africa' },
 ]
 
 interface NewsToolbarProps {
@@ -41,10 +49,10 @@ export default function NewsToolbar({
         sx={{ minWidth: 260 }}
       />
       <FormControl size='small' sx={{ minWidth: 180 }}>
-        <InputLabel>Region</InputLabel>
+        <InputLabel>Country</InputLabel>
         <Select
           value={country}
-          label='Region'
+          label='Country'
           onChange={(e) => onCountryChange(e.target.value)}
         >
           {COUNTRIES.map((c) => (

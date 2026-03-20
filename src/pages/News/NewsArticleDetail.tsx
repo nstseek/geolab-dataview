@@ -1,4 +1,5 @@
 import CloseIcon from '@mui/icons-material/Close'
+import HideImageOutlinedIcon from '@mui/icons-material/HideImageOutlined'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
@@ -53,13 +54,34 @@ export default function NewsArticleDetail({ article, onClose }: NewsArticleDetai
 
         <Divider sx={{ mb: 2 }} />
 
-        {article.image_url && (
+        {article.image_url ? (
           <Box
             component='img'
             src={article.image_url}
-            alt=''
+            alt={article.title}
             sx={{ width: '100%', borderRadius: 1, mb: 2, maxHeight: 240, objectFit: 'cover' }}
           />
+        ) : (
+          <Box
+            role='img'
+            aria-label='Image not available'
+            sx={{
+              width: '100%',
+              height: 120,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 1,
+              bgcolor: 'action.hover',
+              borderRadius: 1,
+              mb: 2,
+              color: 'text.disabled',
+            }}
+          >
+            <HideImageOutlinedIcon fontSize='large' />
+            <Typography variant='caption'>Image not available</Typography>
+          </Box>
         )}
 
         <Typography variant='body2' color='text.secondary' sx={{ mb: 3, lineHeight: 1.8 }}>

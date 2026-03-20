@@ -1,37 +1,32 @@
-import Alert from '@mui/material/Alert'
 import Box from '@mui/material/Box'
-import { useDeferredValue, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
 import { useHeader } from '@context/HeaderContext'
+import { useDebouncedState } from '@hooks/useDebouncedState'
 import { useNewsQuery } from '@queries/news/useNewsQuery'
 import type { NewsArticle } from '@queries/news/types'
 import NewsArticleDetail from './NewsArticleDetail'
 import NewsArticleList from './NewsArticleList'
 import NewsToolbar from './NewsToolbar'
 
-const COUNTRIES: Record<string, string> = {
-  us: 'United States', gb: 'United Kingdom', de: 'Germany', fr: 'France',
-  au: 'Australia', ca: 'Canada', jp: 'Japan', br: 'Brazil', in: 'India',
-}
-
 export default function News() {
   const { setHeader } = useHeader()
-  const [search, setSearch] = useState('')
+  const [search, debouncedSearch, setSearch] = useDebouncedState('')
   const [country, setCountry] = useState('')
   const [selectedArticle, setSelectedArticle] = useState<NewsArticle | null>(null)
 
-  const deferredSearch = useDeferredValue(search)
-
   const { data, isLoading, isError } = useNewsQuery({
-    q: deferredSearch || undefined,
+    q: debouncedSearch || undefined,
     country: country || undefined,
   })
 
   useEffect(() => {
-    const regionLabel = country ? COUNTRIES[country] ?? country : ''
-    const articleTitle = selectedArticle?.title ?? ''
-    const parts = [regionLabel, articleTitle].filter(Boolean)
-    setHeader('News', parts.join(' – '))
-  }, [setHeader, country, selectedArticle])
+    setHeader('News', selectedArticle?.title ?? '')
+  }, [setHeader, selectedArticle])
+
+  useEffect(() => {
+    if (isError) toast.error('Failed to load news. Check your API key.')
+  }, [isError])
 
   return (
     <Box>
@@ -41,12 +36,6 @@ export default function News() {
         country={country}
         onCountryChange={setCountry}
       />
-
-      {isError && (
-        <Alert severity='error' sx={{ mb: 2 }}>
-          Failed to load news. Check that the API key in src/api/news.ts is set correctly.
-        </Alert>
-      )}
 
       <NewsArticleList
         articles={data?.results ?? []}
