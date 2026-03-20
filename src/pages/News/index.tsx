@@ -24,13 +24,11 @@ export default function News() {
   });
 
   useEffect(() => {
-    if (selectedArticle) {
-      setHeader("News", selectedArticle.title);
-    } else {
-      const countryLabel =
-        COUNTRIES.find((c) => c.code === country)?.label ?? "";
-      setHeader("News", country ? countryLabel : "");
-    }
+    const countryLabel = country
+      ? (COUNTRIES.find((c) => c.code === country)?.label ?? "")
+      : "";
+    const parts = [countryLabel, selectedArticle?.title ?? ""].filter(Boolean);
+    setHeader("News", parts.join(" – "));
   }, [setHeader, selectedArticle, country]);
 
   useEffect(() => {

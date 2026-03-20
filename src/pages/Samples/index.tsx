@@ -40,10 +40,10 @@ export default function Samples() {
     } else if (isAnyFilterActive) {
       setHeader(
         "Samples",
-        `${rows.length} rows (${gridFilteredCount} visible)`,
+        `${rows.length} rows (filtered: ${gridFilteredCount})`,
       );
     } else {
-      setHeader("Samples", fileName ?? "");
+      setHeader("Samples", fileName ? `file: ${fileName}` : "");
     }
   }, [setHeader, rows.length, isAnyFilterActive, gridFilteredCount, fileName]);
 
