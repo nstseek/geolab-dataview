@@ -5,7 +5,7 @@ import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
 import TextField from '@mui/material/TextField'
 
-const COUNTRIES = [
+export const COUNTRIES = [
   { code: '', label: 'All Countries' },
   { code: 'us', label: 'United States' },
   { code: 'gb', label: 'United Kingdom' },

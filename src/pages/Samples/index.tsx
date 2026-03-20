@@ -53,11 +53,14 @@ export default function Samples() {
   );
 
   useEffect(() => {
-    const rowCount = `${summary.totalSamples} rows`;
-    const filterInfo = filter ? ` (filtered: ${summary.totalSamples})` : "";
-    const fileInfo = fileName ? `file: ${fileName}` : rowCount + filterInfo;
-    setHeader("Samples", rows.length > 0 ? fileInfo : "");
-  }, [setHeader, rows.length, summary.totalSamples, filter, fileName]);
+    if (rows.length === 0) {
+      setHeader("Samples", "");
+    } else if (filter) {
+      setHeader("Samples", `${rows.length} rows (${visibleRows.length} filtered)`);
+    } else {
+      setHeader("Samples", fileName ?? "");
+    }
+  }, [setHeader, rows.length, visibleRows.length, filter, fileName]);
 
   return (
     <Box

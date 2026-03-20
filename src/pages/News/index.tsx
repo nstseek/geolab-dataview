@@ -7,7 +7,7 @@ import { useNewsQuery } from '@queries/news/useNewsQuery'
 import type { NewsArticle } from '@queries/news/types'
 import NewsArticleDetail from './NewsArticleDetail'
 import NewsArticleList from './NewsArticleList'
-import NewsToolbar from './NewsToolbar'
+import NewsToolbar, { COUNTRIES } from './NewsToolbar'
 
 export default function News() {
   const { setHeader } = useHeader()
@@ -21,8 +21,13 @@ export default function News() {
   })
 
   useEffect(() => {
-    setHeader('News', selectedArticle?.title ?? '')
-  }, [setHeader, selectedArticle])
+    if (selectedArticle) {
+      setHeader('News', selectedArticle.title)
+    } else {
+      const countryLabel = COUNTRIES.find((c) => c.code === country)?.label ?? ''
+      setHeader('News', country ? countryLabel : '')
+    }
+  }, [setHeader, selectedArticle, country])
 
   useEffect(() => {
     if (isError) toast.error('Failed to load news. Check your API key.')
