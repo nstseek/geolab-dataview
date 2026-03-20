@@ -106,7 +106,7 @@ The spec listed responsive design as a "plus." The implementation covers the ful
 <img width="414" height="894" alt="image" src="https://github.com/user-attachments/assets/90bfbe9f-441a-40ba-a1e3-5f33aba1f003" />
 <img width="411" height="894" alt="image" src="https://github.com/user-attachments/assets/d664b4f4-b02f-46ff-8279-464b69c9d76c" />
 
---
+---
 
 ## Getting Started
 
