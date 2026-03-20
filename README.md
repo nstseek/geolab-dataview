@@ -102,16 +102,33 @@ src/
 ├── components/
 │   └── layout/                   # App shell: Header, Sidebar, Layout wrapper
 ├── context/
-│   └── HeaderContext.tsx         # Lightweight React Context for dynamic page titles
+│   └── HeaderContext/            # Dynamic page title context
+│       ├── context.ts            # Context definition
+│       ├── hook.ts               # useHeader context hook
+│       ├── provider.tsx          # HeaderProvider component
+│       └── index.ts              # Public barrel export
 ├── hooks/
 │   └── useDebouncedState.ts      # Generic debounced state hook (shared across pages)
 ├── pages/
 │   ├── Home.tsx                  # Homepage rendering cards that lead to feature pages
-│   ├── News/                     # News feature (page-scoped components and toolbar)
+│   ├── News/                     # News feature
+│   │   ├── NewsArticleList.tsx   # Article list with skeletons and metadata
+│   │   ├── NewsArticleDetail.tsx # Article detail modal
+│   │   └── NewsToolbar/          # Search and country filter controls
+│   │       ├── index.tsx         # Toolbar component
+│   │       └── countries.ts      # Country list constant
 │   └── Samples/                  # Samples feature
 │       ├── components/           # Page-scoped UI (toolbar, summary bar)
 │       ├── hooks/                # Page-scoped state logic (useSamplesRows)
-│       └── utils/                # Page-scoped utilities (calc, CSV, columns, validation)
+│       └── utils/                # Page-scoped utilities
+│           ├── calc.ts           # Geotechnical formulas
+│           ├── csv.ts            # CSV import/export with PapaParse
+│           ├── validationSchema.ts # Zod schema + row defaults
+│           └── columns/          # DataGrid column definitions
+│               ├── index.tsx     # Column config array
+│               ├── ComputedHeader.tsx  # Read-only column header
+│               ├── EditCellWithTooltip.tsx # Edit cell with validation tooltip
+│               └── constants.ts  # Shared constants (cell class names)
 ├── queries/                      # React Query layer
 │   ├── queryKeys.ts              # Centralized query key factory
 │   └── news/                     # News query hook and response types
@@ -134,6 +151,8 @@ api/                              # Vercel serverless functions (project root)
 **React Context over heavy state managers.** The app uses React's built-in Context API for cross-cutting concerns like the dynamic header. Contexts are lightweight, come ready to use with zero extra dependencies, and fully meet the needs of this application without the overhead of external state libraries. Server state is handled by React Query; component state stays local in hooks.
 
 **Custom hooks for separation of concerns.** Complex logic is extracted into focused hooks. `useSamplesRows` encapsulates all row state management (CRUD, filtering, summary computation, row processing) and exposes a clean interface to the page component. `useDebouncedState` provides a reusable debounce pattern shared between the News search and the Samples filter. This keeps page components thin and focused on rendering.
+
+**React Fast Refresh–friendly file structure.** Vite's React Fast Refresh enables near-instant feedback during development — when you edit a component, only that component re-renders without losing page state. For Fast Refresh to work reliably, each file should export only React components or only non-component values, not a mix of both. This is why `HeaderContext` is split into separate files for the context definition, the provider component, and the hook, and why `utils/columns` has its own folder separating `ComputedHeader` and `EditCellWithTooltip` components from the column configuration array and constants. This discipline keeps the development loop fast and eliminates a class of "why didn't my change show up?" issues during development.
 
 **CSV import/export as a first-class feature.** Users can upload their own CSV, but can also download a sample CSV directly from the toolbar — removing friction for first-time users who want to explore the Samples page immediately. PapaParse handles both parsing and generation, with Zod validation on every imported row to catch bad data at the boundary.
 
