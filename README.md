@@ -1,4 +1,4 @@
-<img width="411" height="896" alt="image" src="https://github.com/user-attachments/assets/6e7e9b6b-c9a7-42c1-b665-3be6afa34d26" /># GeoLab DataView
+# GeoLab DataView
 
 [![Build](https://github.com/nstseek/geolab-dataview/actions/workflows/build.yml/badge.svg)](https://github.com/nstseek/geolab-dataview/actions/workflows/build.yml)
 [![Test](https://github.com/nstseek/geolab-dataview/actions/workflows/test.yml/badge.svg)](https://github.com/nstseek/geolab-dataview/actions/workflows/test.yml)
