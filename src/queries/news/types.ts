@@ -33,10 +33,8 @@ export interface NewsArticle {
 export interface NewsQueryParams {
   // Full-text search
   q?: string
-  // Comma-separated 2-letter ISO country codes, e.g. "us,gb"
+  // 2-letter ISO country code, e.g. "us", "gb"
   country?: string
-  // Comma-separated language codes, e.g. "en,fr"
-  language?: string
   // Pagination cursor — value of nextPage from previous response
   page?: string
 }
