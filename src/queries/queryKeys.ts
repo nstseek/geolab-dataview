@@ -1,5 +1,5 @@
-import type { NewsQueryParams } from './news/types'
+import type { NewsQueryParams } from "./news/types";
 
 export const queryKeys = {
-  news: (params: NewsQueryParams) => ['news', params] as const,
-}
+  news: (params: NewsQueryParams) => ["news", params] as const,
+};

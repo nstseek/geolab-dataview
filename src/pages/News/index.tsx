@@ -1,37 +1,40 @@
-import Box from '@mui/material/Box'
-import { useEffect, useState } from 'react'
-import { toast } from 'sonner'
-import { useHeader } from '@context/HeaderContext'
-import { useDebouncedState } from '@hooks/useDebouncedState'
-import { useNewsQuery } from '@queries/news/useNewsQuery'
-import type { NewsArticle } from '@queries/news/types'
-import NewsArticleDetail from './NewsArticleDetail'
-import NewsArticleList from './NewsArticleList'
-import NewsToolbar, { COUNTRIES } from './NewsToolbar'
+import Box from "@mui/material/Box";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import { useHeader } from "@context/HeaderContext";
+import { useDebouncedState } from "@hooks/useDebouncedState";
+import { useNewsQuery } from "@queries/news/useNewsQuery";
+import type { NewsArticle } from "@queries/news/types";
+import NewsArticleDetail from "./NewsArticleDetail";
+import NewsArticleList from "./NewsArticleList";
+import NewsToolbar, { COUNTRIES } from "./NewsToolbar";
 
 export default function News() {
-  const { setHeader } = useHeader()
-  const [search, debouncedSearch, setSearch] = useDebouncedState('')
-  const [country, setCountry] = useState('')
-  const [selectedArticle, setSelectedArticle] = useState<NewsArticle | null>(null)
+  const { setHeader } = useHeader();
+  const [search, debouncedSearch, setSearch] = useDebouncedState("");
+  const [country, setCountry] = useState("");
+  const [selectedArticle, setSelectedArticle] = useState<NewsArticle | null>(
+    null,
+  );
 
   const { data, isLoading, isError } = useNewsQuery({
     q: debouncedSearch || undefined,
     country: country || undefined,
-  })
+  });
 
   useEffect(() => {
     if (selectedArticle) {
-      setHeader('News', selectedArticle.title)
+      setHeader("News", selectedArticle.title);
     } else {
-      const countryLabel = COUNTRIES.find((c) => c.code === country)?.label ?? ''
-      setHeader('News', country ? countryLabel : '')
+      const countryLabel =
+        COUNTRIES.find((c) => c.code === country)?.label ?? "";
+      setHeader("News", country ? countryLabel : "");
     }
-  }, [setHeader, selectedArticle, country])
+  }, [setHeader, selectedArticle, country]);
 
   useEffect(() => {
-    if (isError) toast.error('Failed to load news. Check your API key.')
-  }, [isError])
+    if (isError) toast.error("Failed to load news. Check your API key.");
+  }, [isError]);
 
   return (
     <Box>
@@ -53,5 +56,5 @@ export default function News() {
         onClose={() => setSelectedArticle(null)}
       />
     </Box>
-  )
+  );
 }
