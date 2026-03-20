@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const apiClient = axios.create({
-  baseURL: 'https://newsdata.io/api/1',
+  baseURL: '/api',
   timeout: 10000,
 })
 
