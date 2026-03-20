@@ -15,7 +15,9 @@ export default function Layout() {
           p: 3,
           mt: '64px',
           overflow: 'auto',
-          minHeight: 'calc(100vh - 64px)',
+          height: 'calc(100vh - 64px)',
+          display: 'flex',
+          flexDirection: 'column',
         }}
       >
         <Outlet />
