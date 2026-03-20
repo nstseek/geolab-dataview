@@ -1,8 +1,8 @@
 import Papa from "papaparse";
 import { toast } from "sonner";
 import { SAMPLE_ROW_CONFIG, type SampleRow } from "../types";
-import { fillRowDefaultValues, recalcRow } from "../utils/calc";
-import { sampleRowSchema } from "./validationSchema";
+import { recalcRow } from "../utils/calc";
+import { fillRowDefaultValues, sampleRowSchema } from "./validationSchema";
 
 type RawCsvRow = [string, string, string, string, string];
 

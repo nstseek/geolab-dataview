@@ -5,17 +5,13 @@ import {
 } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { useCallback, useEffect, useState } from "react";
-import { toast } from "sonner";
+import { useEffect, useState } from "react";
 import { useHeader } from "@context/HeaderContext";
 import SamplesSummaryBar from "./components/SamplesSummary";
 import SamplesToolbar from "./components/SamplesToolbar";
-import { useSamplesState } from "./hooks/useSamplesState";
-import type { SampleRow } from "./types";
-import { fillRowDefaultValues, recalcRow } from "./utils/calc";
+import { useSamplesRows } from "./hooks/useSamplesRows";
 import { COMPUTED_CELL_CLASS, samplesColumns } from "./utils/columns";
 import { handleExport, handleFileUpload } from "./utils/csv";
-import { sampleRowSchema } from "./utils/validationSchema";
 
 export default function Samples() {
   const { setHeader } = useHeader();
@@ -31,32 +27,9 @@ export default function Samples() {
     autoRecalc,
     setAutoRecalc,
     loadRows,
-    updateRow,
+    processRowUpdate,
     recalculateAll,
-  } = useSamplesState();
-
-  const processRowUpdate = useCallback(
-    (newRow: SampleRow, oldRow: SampleRow): SampleRow => {
-      const newRowFilteredEntries = Object.entries(newRow).filter(
-        ([, value]) => value !== undefined,
-      );
-      const newRowFiltered = Object.fromEntries(newRowFilteredEntries);
-      const merged = { ...oldRow, ...newRowFiltered };
-      const autofilledRow = fillRowDefaultValues(merged);
-
-      const result = sampleRowSchema.safeParse(autofilledRow);
-      if (!result.success) {
-        const message = result.error.issues[0]?.message ?? "Invalid row data";
-        toast.error(["Failed to edit", message].join(" - "));
-        return oldRow;
-      } else {
-        const updated = autoRecalc ? recalcRow(autofilledRow) : autofilledRow;
-        updateRow(updated);
-        return updated;
-      }
-    },
-    [autoRecalc, updateRow],
-  );
+  } = useSamplesRows();
 
   const isAnyFilterActive = !!filter || gridFilteredCount < visibleRows.length;
 

@@ -1,8 +1,4 @@
-import {
-  SAMPLE_ROW_CONFIG,
-  type SampleRow,
-  type SampleRowConfig,
-} from "../types";
+import { type SampleRow } from "../types";
 
 export function calcAdjustedMoisture(
   moisture: number,
@@ -24,15 +20,4 @@ export function recalcRow(row: SampleRow): SampleRow {
     adjustedMoisture: calcAdjustedMoisture(row.moisture, row.correctionFactor),
     adjustedDensity: calcAdjustedDensity(row.dryDensity, row.porosity),
   };
-}
-
-export function fillRowDefaultValues(row: SampleRow) {
-  const filledEntries = Object.entries(row).map(([key, value]) => [
-    key,
-    value ||
-      (SAMPLE_ROW_CONFIG as SampleRowConfig)[key as keyof SampleRowConfig]
-        .defaultValue,
-  ]);
-
-  return Object.fromEntries(filledEntries);
 }

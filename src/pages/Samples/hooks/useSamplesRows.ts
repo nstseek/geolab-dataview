@@ -1,6 +1,11 @@
 import { useCallback, useMemo, useState } from "react";
 import type { SampleRow } from "../types";
 import { recalcRow } from "../utils/calc";
+import { toast } from "sonner";
+import {
+  fillRowDefaultValues,
+  sampleRowSchema,
+} from "../utils/validationSchema";
 
 export interface SamplesSummary {
   avgMoisture: number;
@@ -8,7 +13,7 @@ export interface SamplesSummary {
   totalSamples: number;
 }
 
-export function useSamplesState() {
+export function useSamplesRows() {
   const [rows, setRows] = useState<SampleRow[]>([]);
   const [fileName, setFileName] = useState<string | null>(null);
   const [filter, setFilter] = useState("");
@@ -32,39 +37,56 @@ export function useSamplesState() {
     return { avgMoisture, avgDensity, totalSamples: visibleRows.length };
   }, [visibleRows]);
 
-  /** Replace all rows and set the source file name (e.g. after CSV upload). */
   const loadRows = useCallback((newRows: SampleRow[], name: string) => {
     setRows(newRows);
     setFileName(name);
   }, []);
 
-  /** Append a single row. */
   const addRow = useCallback((row: SampleRow) => {
     setRows((prev) => [...prev, row]);
   }, []);
 
-  /** Replace a single row matched by id. */
   const updateRow = useCallback((updatedRow: SampleRow) => {
     setRows((prev) =>
       prev.map((r) => (r.id === updatedRow.id ? updatedRow : r)),
     );
   }, []);
 
-  /** Remove a row by id. */
   const deleteRow = useCallback((id: string) => {
     setRows((prev) => prev.filter((r) => r.id !== id));
   }, []);
 
-  /** Clear all rows and reset the file name. */
   const clearRows = useCallback(() => {
     setRows([]);
     setFileName(null);
   }, []);
 
-  /** Re-run derived column calculations on every row. */
   const recalculateAll = useCallback(() => {
     setRows((prev) => prev.map(recalcRow));
   }, []);
+
+  const processRowUpdate = useCallback(
+    (newRow: SampleRow, oldRow: SampleRow): SampleRow => {
+      const newRowFilteredEntries = Object.entries(newRow).filter(
+        ([, value]) => value !== undefined,
+      );
+      const newRowFiltered = Object.fromEntries(newRowFilteredEntries);
+      const merged = { ...oldRow, ...newRowFiltered };
+      const autofilledRow = fillRowDefaultValues(merged);
+
+      const result = sampleRowSchema.safeParse(autofilledRow);
+      if (!result.success) {
+        const message = result.error.issues[0]?.message ?? "Invalid row data";
+        toast.error(["Failed to edit", message].join(" - "));
+        return oldRow;
+      } else {
+        const updated = autoRecalc ? recalcRow(autofilledRow) : autofilledRow;
+        updateRow(updated);
+        return updated;
+      }
+    },
+    [autoRecalc, updateRow],
+  );
 
   return {
     rows,
@@ -81,5 +103,6 @@ export function useSamplesState() {
     deleteRow,
     clearRows,
     recalculateAll,
+    processRowUpdate,
   };
 }
