@@ -46,9 +46,9 @@ export default function NewsToolbar({
         label='Search articles'
         value={search}
         onChange={(e) => onSearchChange(e.target.value)}
-        sx={{ minWidth: 260 }}
+        sx={{ minWidth: 260, width: { xs: '100%', sm: 'auto' } }}
       />
-      <FormControl size='small' sx={{ minWidth: 180 }}>
+      <FormControl size='small' sx={{ minWidth: 180, width: { xs: '100%', sm: 'auto' } }}>
         <InputLabel>Country</InputLabel>
         <Select
           value={country}

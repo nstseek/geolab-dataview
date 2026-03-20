@@ -8,6 +8,8 @@ import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import Typography from '@mui/material/Typography'
+import { useTheme } from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
 import { NavLink } from 'react-router-dom'
 
 const DRAWER_WIDTH = 240
@@ -18,21 +20,24 @@ const navItems = [
   { label: 'News', path: '/news', icon: <ArticleIcon /> },
 ]
 
-export default function Sidebar() {
-  return (
-    <Drawer
-      variant='permanent'
-      sx={{
-        width: DRAWER_WIDTH,
-        flexShrink: 0,
-        '& .MuiDrawer-paper': {
-          width: DRAWER_WIDTH,
-          boxSizing: 'border-box',
-          top: 64,
-          height: 'calc(100% - 64px)',
-        },
-      }}
-    >
+interface SidebarProps {
+  mobileOpen: boolean
+  onClose: () => void
+}
+
+const drawerPaperSx = {
+  width: DRAWER_WIDTH,
+  boxSizing: 'border-box',
+  top: 64,
+  height: 'calc(100% - 64px)',
+}
+
+export default function Sidebar({ mobileOpen, onClose }: SidebarProps) {
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
+
+  const drawerContent = (
+    <>
       <Typography
         variant='overline'
         sx={{ px: 2, pt: 2, pb: 1, color: 'text.secondary', letterSpacing: 2 }}
@@ -46,6 +51,7 @@ export default function Sidebar() {
               component={NavLink}
               to={path}
               end={path === '/'}
+              onClick={isMobile ? onClose : undefined}
               sx={{
                 '&.active': {
                   backgroundColor: 'primary.dark',
@@ -64,6 +70,33 @@ export default function Sidebar() {
           </ListItem>
         ))}
       </List>
+    </>
+  )
+
+  if (isMobile) {
+    return (
+      <Drawer
+        variant='temporary'
+        open={mobileOpen}
+        onClose={onClose}
+        ModalProps={{ keepMounted: true }}
+        sx={{ '& .MuiDrawer-paper': drawerPaperSx }}
+      >
+        {drawerContent}
+      </Drawer>
+    )
+  }
+
+  return (
+    <Drawer
+      variant='permanent'
+      sx={{
+        width: DRAWER_WIDTH,
+        flexShrink: 0,
+        '& .MuiDrawer-paper': drawerPaperSx,
+      }}
+    >
+      {drawerContent}
     </Drawer>
   )
 }

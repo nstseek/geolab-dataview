@@ -11,6 +11,8 @@ import type { SampleRow } from "../types";
 
 export const COMPUTED_CELL_CLASS = "computed-cell";
 
+const COL_MIN_WIDTH = 120;
+
 function EditCellWithTooltip(
   props: Parameters<NonNullable<GridColDef["renderEditCell"]>>[0],
 ) {
@@ -69,6 +71,7 @@ export const samplesColumns: GridColDef<SampleRow>[] = [
     field: "id",
     headerName: "Sample ID",
     flex: 1,
+    minWidth: COL_MIN_WIDTH,
     preProcessEditCellProps: (params) => {
       const result = z
         .string()
@@ -86,6 +89,7 @@ export const samplesColumns: GridColDef<SampleRow>[] = [
     headerName: "Moisture (%)",
     type: "number",
     flex: 1,
+    minWidth: COL_MIN_WIDTH,
     editable: true,
     renderEditCell: (params) => <EditCellWithTooltip {...params} />,
   },
@@ -94,6 +98,7 @@ export const samplesColumns: GridColDef<SampleRow>[] = [
     headerName: "Dry Density (g/cm³)",
     type: "number",
     flex: 1,
+    minWidth: COL_MIN_WIDTH,
     editable: true,
     renderEditCell: (params) => <EditCellWithTooltip {...params} />,
   },
@@ -102,6 +107,7 @@ export const samplesColumns: GridColDef<SampleRow>[] = [
     headerName: "Correction Factor (%)",
     type: "number",
     flex: 1,
+    minWidth: COL_MIN_WIDTH,
     editable: true,
     renderEditCell: (params) => <EditCellWithTooltip {...params} />,
   },
@@ -110,6 +116,7 @@ export const samplesColumns: GridColDef<SampleRow>[] = [
     headerName: "Porosity (%)",
     type: "number",
     flex: 1,
+    minWidth: COL_MIN_WIDTH,
     editable: true,
     renderEditCell: (params) => <EditCellWithTooltip {...params} />,
   },
@@ -118,6 +125,7 @@ export const samplesColumns: GridColDef<SampleRow>[] = [
     headerName: "Adjusted Moisture (%)",
     type: "number",
     flex: 1,
+    minWidth: COL_MIN_WIDTH,
     cellClassName: COMPUTED_CELL_CLASS,
     renderHeader: (params) => <ComputedHeader {...params} />,
     valueFormatter: (value: number) => value.toFixed(4),
@@ -127,6 +135,7 @@ export const samplesColumns: GridColDef<SampleRow>[] = [
     headerName: "Adjusted Density (g/cm³)",
     type: "number",
     flex: 1,
+    minWidth: COL_MIN_WIDTH,
     cellClassName: COMPUTED_CELL_CLASS,
     renderHeader: (params) => <ComputedHeader {...params} />,
     valueFormatter: (value: number) => value.toFixed(4),

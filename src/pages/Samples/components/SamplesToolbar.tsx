@@ -71,7 +71,7 @@ export default function SamplesToolbar({
         label='Filter by Sample ID'
         value={filter}
         onChange={(e) => onFilterChange(e.target.value)}
-        sx={{ minWidth: 220 }}
+        sx={{ minWidth: 220, width: { xs: '100%', sm: 'auto' } }}
       />
 
       <FormControlLabel
