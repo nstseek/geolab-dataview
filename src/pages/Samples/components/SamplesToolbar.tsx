@@ -56,6 +56,16 @@ export default function SamplesToolbar({
         Upload CSV
       </Button>
 
+      <Button
+        variant='outlined'
+        startIcon={<DownloadIcon />}
+        component='a'
+        href='/sample.csv'
+        download='sample.csv'
+      >
+        Download Sample CSV
+      </Button>
+
       <TextField
         size='small'
         label='Filter by Sample ID'
