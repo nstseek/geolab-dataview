@@ -1,5 +1,11 @@
 # GeoLab DataView
 
+[![Build](https://github.com/nstseek/geolab-dataview/actions/workflows/build.yml/badge.svg)](https://github.com/nstseek/geolab-dataview/actions/workflows/build.yml)
+[![Test](https://github.com/nstseek/geolab-dataview/actions/workflows/test.yml/badge.svg)](https://github.com/nstseek/geolab-dataview/actions/workflows/test.yml)
+[![Vercel](https://img.shields.io/badge/Vercel-Live-brightgreen?logo=vercel&logoColor=white)](https://geolab-dataview-cbgo.vercel.app/)
+[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+
 A modern geotechnical data management and news aggregation platform built with React 19, TypeScript, and Material UI. Upload, edit, validate, and export soil sample data — and stay up to date with regional geo-science news — all in one responsive, accessible interface.
 
 **Live demo:** [geolab-dataview-cbgo.vercel.app](https://geolab-dataview-cbgo.vercel.app/)
