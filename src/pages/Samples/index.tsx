@@ -1,7 +1,11 @@
-import { DataGrid } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  gridFilteredRowCountSelector,
+  useGridApiRef,
+} from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useHeader } from "@context/HeaderContext";
 import SamplesSummaryBar from "./components/SamplesSummary";
@@ -15,6 +19,8 @@ import { sampleRowSchema } from "./utils/validationSchema";
 
 export default function Samples() {
   const { setHeader } = useHeader();
+  const apiRef = useGridApiRef();
+  const [gridFilteredCount, setGridFilteredCount] = useState(0);
   const {
     rows,
     visibleRows,
@@ -52,15 +58,20 @@ export default function Samples() {
     [autoRecalc, updateRow],
   );
 
+  const isAnyFilterActive = !!filter || gridFilteredCount < visibleRows.length;
+
   useEffect(() => {
     if (rows.length === 0) {
       setHeader("Samples", "");
-    } else if (filter) {
-      setHeader("Samples", `${rows.length} rows (${visibleRows.length} filtered)`);
+    } else if (isAnyFilterActive) {
+      setHeader(
+        "Samples",
+        `${rows.length} rows (${gridFilteredCount} visible)`,
+      );
     } else {
       setHeader("Samples", fileName ?? "");
     }
-  }, [setHeader, rows.length, visibleRows.length, filter, fileName]);
+  }, [setHeader, rows.length, isAnyFilterActive, gridFilteredCount, fileName]);
 
   return (
     <Box
@@ -107,10 +118,14 @@ export default function Samples() {
         >
           <SamplesSummaryBar summary={summary} />
           <DataGrid
+            apiRef={apiRef}
             rows={visibleRows}
             columns={samplesColumns}
             editMode="row"
             processRowUpdate={processRowUpdate}
+            onStateChange={() =>
+              setGridFilteredCount(gridFilteredRowCountSelector(apiRef))
+            }
             pageSizeOptions={[25, 50, 100]}
             initialState={{ pagination: { paginationModel: { pageSize: 25 } } }}
             sx={{
