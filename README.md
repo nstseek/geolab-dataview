@@ -12,29 +12,72 @@ A modern geotechnical data management and news aggregation platform built with R
 
 ---
 
-## Features
+## Requirements Delivered
 
-### Samples
+Every requirement from the original specification is implemented:
 
-- Upload CSV files containing soil sample data (moisture, dry density, correction factor, porosity)
-- Inline row editing with real-time validation powered by Zod schemas
-- Automatic or manual recalculation of derived columns (adjusted moisture, adjusted density)
-- Filtering by sample ID and through the DataGrid's built-in column filters, with live header feedback showing total vs. visible row counts
-- Download a sample CSV to quickly test the workflow without your own data
-- Export the current dataset back to CSV at any time
-- Summary bar displaying aggregate statistics (total samples, average adjusted moisture and density)
+- **Multi-page SPA** with Home, Samples, and News pages, all in React 19 + TypeScript
+- **Global side menu** with links to every page, always visible on desktop
+- **Dynamic page header** reflecting the active context — file name, row/filter counts, selected region, article title — exactly as specified
+- **Samples page** — CSV upload, editable table with all five columns, default values for Correction Factor (5%) and Porosity (30%), two derived read-only columns with the correct formulas, filter by Sample ID, Auto Recalculate toggle with manual Recalculate button, and a live summary bar (avgMoisture, avgDensity, totalSamples)
+- **News page** — newsdata.io integration filtered by Environment/Science/Technology, search input, country selector, top 10 articles with title/date/language/publisher, and a detail modal
+- **Unit tests** covering the core business logic (formulas, CSV parsing, state management, layout)
+- **MUI** as the UI framework (listed as a plus in the spec)
+- **Responsive design** (listed as a plus)
+- **Accessibility** (listed as a plus)
+- **Minimal dependencies** — every library justified, built-in solutions used where sufficient
+- **README** with setup instructions and architectural design choices
 
-### News
+---
 
-- Browse the latest geotechnical, environmental, and science news from the NewsData API
-- Filter articles by country and search by keyword with debounced queries
-- Read article details in a fully accessible modal with image preview, metadata chips, and direct link to the source
+## Beyond the Requirements
 
-### General
+The following features and decisions were not asked for in the specification but were implemented to deliver a polished, production-grade product rather than a bare-minimum prototype.
 
-- Fully responsive layout — the sidebar collapses into a temporary drawer on mobile with a hamburger menu
-- Accessible: skip-to-content link, ARIA landmarks, `aria-current="page"` on active nav items, `aria-labelledby` on modals, dynamic `document.title` updates on navigation
-- Dark theme with a cohesive color palette
+### Security
+
+- **API key protection via serverless proxy.** The NewsData API key never reaches the browser. A Vercel serverless function (`api/news.ts`) holds the key server-side and proxies requests from the frontend. A custom Vite plugin mirrors this behavior locally during development. The result: the key is invisible in the network tab, regardless of environment.
+
+### Developer Experience
+
+- **CI/CD pipeline.** GitHub Actions workflows for build and test run on every push and pull request, with live status badges in this README.
+- **React Fast Refresh–aware file structure.** Files are deliberately split to preserve instant component hot-reloading during development — separating React components from non-component exports (context definitions, constants, column configs) so Fast Refresh never falls back to a full page reload.
+- **Path aliases.** TypeScript path aliases (`@api/`, `@hooks/`, `@queries/`, etc.) eliminate fragile relative imports and make refactoring painless.
+
+### User Experience
+
+- **CSV export.** Users can export their current dataset back to CSV — a natural complement to import that closes the data workflow loop.
+- **Sample CSV download.** A downloadable sample file is available directly from the toolbar, removing friction for anyone wanting to try the Samples page without preparing their own data.
+- **DataGrid column filters.** Beyond the required Sample ID filter, users can filter, sort, and organize data through the DataGrid's built-in column menu — with accurate header counts reflecting all active filters simultaneously.
+- **Skeleton loading states.** The News article list renders animated skeletons while data is loading, providing visual feedback instead of a blank screen.
+- **Toast notifications.** Every user action (import, export, errors) produces non-blocking toast feedback via Sonner.
+
+### Accessibility
+
+The spec listed accessibility as a "plus" with no specifics. The implementation goes deep:
+
+- **Skip-to-content link** — keyboard users can bypass the sidebar and jump directly to the main content
+- **ARIA landmarks** — the sidebar renders as a `<nav aria-label="Main navigation">` landmark, the summary bar as a `<section aria-label="Data summary">`
+- **`aria-current="page"`** on active navigation items
+- **`aria-labelledby`** on the article detail modal, with `role="dialog"` and `aria-modal`
+- **`aria-expanded`** and `aria-controls` on the mobile hamburger button
+- **`document.title`** updates on every navigation, keeping browser tabs and screen readers in sync
+- **Decorative elements** (`/` separator, section labels) marked `aria-hidden` to reduce noise
+
+### Responsive Design
+
+The spec listed responsive design as a "plus." The implementation covers the full layout:
+
+- **Collapsible sidebar** — switches from a permanent drawer to a temporary overlay below the `md` breakpoint, with a hamburger toggle in the header
+- **Responsive content padding** — tighter on mobile, wider on desktop
+- **Full-width toolbar inputs** on small screens with natural wrapping
+- **Header breadcrumb** hides on extra-small screens to save space
+
+### Architecture
+
+- **Production-grade query layer** — TanStack React Query with centralized cache keys, configurable stale time, placeholder data for seamless transitions, and automatic retries. Intentionally chosen over React 19's new `use()` hook because it provides a strictly superior feature set for this use case.
+- **Zod validation at the boundary** — every imported CSV row is validated against a typed schema before entering the application state, catching bad data early with clear error messages.
+- **Feature-scoped folder structure** — page-specific code lives inside its page folder; only genuinely shared code lives in top-level directories. This scales without polluting shared namespaces.
 
 ---
 
